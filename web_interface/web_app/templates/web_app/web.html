@@ -2,6 +2,19 @@
 
 {% block content %}
 
+<h1>Object List</h1>
+{% if book_list %}
+<ul>
+    {% for object in object_list %}
+    <li>
+        <p>{{ object.name }}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+    <p>There are no object in the library.</p>
+{% endif %}
+
     <br>
     <div class="container">
         <div class="row">

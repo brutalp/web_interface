@@ -40,4 +40,15 @@
     </state>
     <state x="529" y="252" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1583401774032" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/web_app/models.py</url>
+          <line>263</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
 </project>
