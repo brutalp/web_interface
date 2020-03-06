@@ -262,7 +262,6 @@ class Modbus(models.Model):
 
 
 class Object(models.Model):
-    # objects = None
     unused = models.BooleanField(db_column='Unused')  # Field name made lowercase.
     id = models.AutoField(db_column='Id', primary_key=True)  # Field name made lowercase.
     objecttypeid = models.IntegerField(db_column='ObjectTypeId')  # Field name made lowercase.

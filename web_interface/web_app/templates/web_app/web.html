@@ -1,7 +1,6 @@
 {% extends 'web_app/wrapper.html' %}
 
 {% block content %}
-
     <br>
     <div class="container">
         <div class="row">
@@ -73,14 +72,13 @@
                                 <td>Сера</td>
                                 <td>Рассеянное</td>
                                 <td>Концентрация</td>
-                                <td>Аналитическая программа</td>
+                                <td>{{ object.name }}</td>
                                 <td>{{ object.name }}</td>
                             </tr>
                         {% endfor %}
                         {% else %}
                             <td>There are no object in the library.</td>
                         {% endif %}
-
                     </tbody>
                 </table>
             </div>
