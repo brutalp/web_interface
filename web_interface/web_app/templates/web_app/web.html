@@ -66,14 +66,14 @@
                         {% if object_list %}
                         {% for object in object_list %}
                             <tr>
-                                <td>{{ object.creationtimestamp }}</td>
-                                <td>{{ object.creationtimestamp }}</td>
-                                <td>Образец</td>
+                                <td>{{ object.timestamp }}</td>
+                                <td>{{ object.timestamp }}</td>
+                                <td>{{ object.name }}</td>
                                 <td>Сера</td>
                                 <td>Рассеянное</td>
                                 <td>Концентрация</td>
-                                <td>{{ object.name }}</td>
-                                <td>{{ object.name }}</td>
+                                <td>Аналитическая программа</td>
+                                <td>Оператор</td>
                             </tr>
                         {% endfor %}
                         {% else %}
