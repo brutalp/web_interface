@@ -66,14 +66,14 @@
                         {% if object_list %}
                         {% for object in object_list %}
                             <tr>
-                                <td>{{ object.timestamp }}</td>
-                                <td>{{ object.timestamp }}</td>
-                                <td>{{ object.name }}</td>
-                                <td>Сера</td>
-                                <td>Рассеянное</td>
-                                <td>Концентрация</td>
-                                <td>Аналитическая программа</td>
-                                <td>Оператор</td>
+                                <td>{{ object.measurementid.timestamp }}</td>
+                                <td>{{ object.measurementid.timestamp }}</td>
+                                <td>{{ object.measurementid.name }}</td>
+                                <td>{{ object.value }}</td>
+                                <td>{{ object.value }}</td>
+                                <td>{{ object.value }}</td>
+                                <td>{{ object.measurementid.sampleobjectid.name }}</td>
+                                <td>{{ object.measurementid.sampleobjectid.name }}</td>
                             </tr>
                         {% endfor %}
                         {% else %}
