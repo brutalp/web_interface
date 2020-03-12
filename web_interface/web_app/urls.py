@@ -6,5 +6,5 @@ from . import views
 urlpatterns = [
     # url(r'^$', views.web_app, name='web'),
     # url(r'^$', views.ObjectView.as_view(), name='object'),
-    url(r'^$', ListView.as_view(queryset=Value.objects.all(), template_name='web_app/web.html')),
+    url(r'^$', ListView.as_view(queryset=Value.objects.all()[:50], template_name='web_app/web.html')),
 ]
