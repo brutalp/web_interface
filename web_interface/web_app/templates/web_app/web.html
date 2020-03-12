@@ -63,17 +63,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% if object_list %}
-                        {% for object in object_list %}
+                        {% if values %}
+                        {% for value in values %}
                             <tr>
-                                <td>{{ object.measurementid.timestamp }}</td>
-                                <td>{{ object.measurementid.timestamp }}</td>
-                                <td>{{ object.measurementid.name }}</td>
-                                <td>{{ object.value }}</td>
-                                <td>{{ object.value }}</td>
-                                <td>{{ object.value }}</td>
-                                <td>{{ object.measurementid.sampleobjectid.name }}</td>
-                                <td>{{ object.measurementid.sampleobjectid.name }}</td>
+                                <td>{{ value.measurementid.timestamp }}</td>
+                                <td>{{ value.measurementid.timestamp }}</td>
+                                <td>{{ value.measurementid.name }}</td>
+                                <td>{{ value.value }}</td>
+                                <td>{{ value.value }}</td>
+                                <td>{{ value.value }}</td>
+                                <td>{{ value.measurementid.sampleobjectid.name }}</td>
+                                <td>{{ value.measurementid.sampleobjectid.name }}</td>
                             </tr>
                         {% endfor %}
                         {% else %}
@@ -81,6 +81,27 @@
                         {% endif %}
                     </tbody>
                 </table>
+                {% if values.has_other_pages %}
+                    <ul class="pagination">
+                        {% if values.has_previous %}
+                            <li><a href="?page={{ users.previous_page_number }}">&laquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&laquo;</span></li>
+                        {% endif %}
+                        {% for i in values.paginator.page_range %}
+                            {% if values.number == i %}
+                                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                            {% else %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if values.has_next %}
+                            <li><a href="?page={{ users.next_page_number }}">&raquo;</a></li>
+                        {% else %}
+                            <li class="disabled"><span>&raquo;</span></li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
