@@ -72,17 +72,16 @@
                                     <td>{{ value.timestamp }}</td>
                                     <td>{{ value.name }}</td>
                                     {% if value.value.all.count > 0 %}
-
                                         {% for var in value.value.all %}
-                                            <td id="var">{{ var.value }}</td>
+                                            <td>{{ var.value }}</td>
                                         {% endfor %}
                                     {% else %}
                                         <td>0</td>
                                         <td>0</td>
                                         <td>0</td>
                                     {% endif %}
-                                    <td>{{ value.methodObjectId.name }}</td>
-                                    <td>{{ value.measurementid.sampleobjectid.name }}</td>
+                                    <td>{{ value.sampleobjectid.name }}</td>
+                                    <td>{{ value.sampleobjectid.name }}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
