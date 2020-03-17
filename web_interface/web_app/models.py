@@ -485,7 +485,7 @@ class Value(models.Model):
     sourcetypeid = models.ForeignKey(Sourcetype, models.DO_NOTHING, db_column='SourceTypeId')  # Field name made lowercase.
     multiplicity = models.SmallIntegerField(db_column='Multiplicity', blank=True, null=True)  # Field name made lowercase.
     absoluteerror = models.FloatField(db_column='AbsoluteError', blank=True, null=True)  # Field name made lowercase.
-    measurementid = models.ForeignKey(Measurement, models.DO_NOTHING, db_column='MeasurementId')  # Field name made lowercase.
+    measurementid = models.ForeignKey(Measurement, models.DO_NOTHING, db_column='MeasurementId', related_name='value')  # Field name made lowercase.
     exposure = models.FloatField(db_column='Exposure', blank=True, null=True)  # Field name made lowercase.
     criteria = models.IntegerField(db_column='Criteria', blank=True, null=True)  # Field name made lowercase.
     setupid = models.IntegerField(db_column='SetupId', blank=True, null=True)  # Field name made lowercase.

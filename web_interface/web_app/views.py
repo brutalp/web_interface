@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def PagView(request):
-    valueList = Value.objects.all()
+    valueList = Measurement.objects.all().order_by('id')
     page = request.GET.get('page', 1)
     paginator = Paginator(valueList, 50)
     try:
