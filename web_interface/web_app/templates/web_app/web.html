@@ -68,8 +68,8 @@
                             {% for value in values %}
                                 <tr>
                                     <td>{{ value.id }}</td>
-                                    <td>{{ value.timestamp }}</td>
-                                    <td>{{ value.timestamp }}</td>
+                                    <td>{{ value.timestamp|date:"d/M/Y" }}</td>
+                                    <td>{{ value.timestamp|time:"G:i:s" }}</td>
                                     <td>{{ value.name }}</td>
                                     {% if value.value.all.count > 0 %}
                                         {% for var in value.value.all %}
