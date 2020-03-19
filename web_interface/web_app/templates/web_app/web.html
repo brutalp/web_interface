@@ -49,47 +49,49 @@
         <br>
         <div class="row">
             <div class="col">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Id</th>
-                            <th scope="col">Дата</th>
-                            <th scope="col">Время</th>
-                            <th scope="col">Образец</th>
-                            <th scope="col">Сера</th>
-                            <th scope="col">Рассеянное</th>
-                            <th scope="col">Концентрация</th>
-                            <th scope="col">Аналитическая программа</th>
-                            <th scope="col">Оператор</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% if values %}
-                            {% for value in values %}
-                                <tr>
-                                    <td>{{ value.id }}</td>
-                                    <td>{{ value.timestamp|date:"d/m/Y" }}</td>
-                                    <td>{{ value.timestamp|time:"G:i:s" }}</td>
-                                    <td>{{ value.name }}</td>
-                                    {% if value.value.all.count > 0 %}
-                                        {% for var in value.value.all %}
-                                            <td>{{ var.value }}</td>
-                                        {% endfor %}
-                                    {% else %}
-                                        <td>0</td>
-                                        <td>0</td>
-                                        <td>0</td>
-                                    {% endif %}
-                                    {% load custom_filters %}
-                                    <td>{{ value.sampleobjectid.name|cut_name|default:"None" }}</td>
-                                    <td>{{ value.sampleobjectid.name|cut_prog|default:"None" }}</td>
-                                </tr>
-                            {% endfor %}
-                        {% else %}
-                            <td>There are no object in the library.</td>
-                        {% endif %}
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Id</th>
+                                <th scope="col">Дата</th>
+                                <th scope="col">Время</th>
+                                <th scope="col">Образец</th>
+                                <th scope="col">Сера</th>
+                                <th scope="col">Рассеянное</th>
+                                <th scope="col">Концентрация</th>
+                                <th scope="col">Аналитическая программа</th>
+                                <th scope="col">Оператор</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if values %}
+                                {% for value in values %}
+                                    <tr>
+                                        <td>{{ value.id }}</td>
+                                        <td>{{ value.timestamp|date:"d/m/Y" }}</td>
+                                        <td>{{ value.timestamp|time:"G:i:s" }}</td>
+                                        <td>{{ value.name }}</td>
+                                        {% if value.value.all.count > 0 %}
+                                            {% for var in value.value.all %}
+                                                <td>{{ var.value }}</td>
+                                            {% endfor %}
+                                        {% else %}
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                        {% endif %}
+                                        {% load custom_filters %}
+                                        <td>{{ value.sampleobjectid.name|cut_name|default:"None" }}</td>
+                                        <td>{{ value.sampleobjectid.name|cut_prog|default:"None" }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <td>There are no object in the library.</td>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
                 {% if values.has_other_pages %}
                     {% load bootstrap_pagination %}
                     {% bootstrap_paginate values range=25 show_prev_next="false" show_first_last="true" %}
