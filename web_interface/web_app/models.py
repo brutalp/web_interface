@@ -274,9 +274,6 @@ class Object(models.Model):
     parentobjectid = models.ForeignKey('self', models.DO_NOTHING, db_column='ParentObjectId', blank=True, null=True)  # Field name made lowercase.
     active = models.BooleanField(db_column='Active')  # Field name made lowercase.
 
-    def __str__(self):
-        return self.name
-
     class Meta:
         managed = False
         db_table = 'Object'

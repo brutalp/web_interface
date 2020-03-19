@@ -81,8 +81,8 @@
                                         <td>0</td>
                                     {% endif %}
                                     {% load custom_filters %}
-                                    <td>{{ value.sampleobjectid.name|cut_name|default:"None" }}</td>
                                     <td>{{ value.sampleobjectid.name|cut_prog|default:"None" }}</td>
+                                    <td>{{ value.sampleobjectid.name|cut_name|default:"None" }}</td>
                                 </tr>
                             {% endfor %}
                         {% else %}
