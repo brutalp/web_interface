@@ -10,42 +10,44 @@
             </div>
         </div>
         <br>
-        <div class="row">
-            <div class="col">
-                <p>Количество строк на странице</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="value" id="id50" value="50">
-                    <label class="form-check-label" for="id50">50</label>
+        <form method="post">
+            <div class="row">
+                <div class="col">
+                    <p>Количество строк на странице</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="id50" value="50">
+                        <label class="form-check-label" for="id50">50</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="id100" value="100">
+                        <label class="form-check-label" for="id100">100</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="id150" value="150">
+                        <label class="form-check-label" for="id150">150</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="value" id="id200" value="200">
+                        <label class="form-check-label" for="id200">200</label>
+                    </div>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="value" id="id100" value="100">
-                    <label class="form-check-label" for="id100">100</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="value" id="id150" value="150">
-                    <label class="form-check-label" for="id150">150</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="value" id="id200" value="200">
-                    <label class="form-check-label" for="id200">200</label>
+                <div class="col">
+                    <p>Фильтр</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="filter" id="day" value="day">
+                        <label class="form-check-label" for="day">Показать за день</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="filter" id="period" value="period">
+                        <label class="form-check-label" for="period">Показать за период</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="filter" id="all" value="all">
+                        <label class="form-check-label" for="all">Все результаты</label>
+                    </div>
                 </div>
             </div>
-            <div class="col">
-                <p>Фильтр</p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="day" value="day">
-                    <label class="form-check-label" for="day">Показать за день</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="period" value="period">
-                    <label class="form-check-label" for="period">Показать за период</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="all" value="all">
-                    <label class="form-check-label" for="all">Все результаты</label>
-                </div>
-            </div>
-        </div>
+        </form>
         <br>
         <div class="row">
             <div class="col">
@@ -53,7 +55,7 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">Id</th>
+<!--                                <th scope="col">Id</th>-->
                                 <th scope="col">Дата</th>
                                 <th scope="col">Время</th>
                                 <th scope="col">Образец</th>
@@ -68,13 +70,17 @@
                             {% if values %}
                                 {% for value in values %}
                                     <tr>
-                                        <td>{{ value.id }}</td>
+<!--                                        <td>{{ value.id }}</td>-->
                                         <td>{{ value.timestamp|date:"d/m/Y" }}</td>
                                         <td>{{ value.timestamp|time:"G:i:s" }}</td>
                                         <td>{{ value.name }}</td>
                                         {% if value.value.all.count > 0 %}
                                             {% for var in value.value.all %}
-                                                <td>{{ var.value }}</td>
+                                                {% if forloop.counter == 1 or forloop.counter == 2 %}
+                                                    <td>{{ var.value }}</td>
+                                                {% else %}
+                                                    <td>{{ var.value|floatformat:5 }}</td>
+                                                {% endif %}
                                             {% endfor %}
                                         {% else %}
                                             <td>0</td>
