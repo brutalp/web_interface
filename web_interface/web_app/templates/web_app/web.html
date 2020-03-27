@@ -10,7 +10,8 @@
             </div>
         </div>
         <br>
-        <form method="post">
+        <form action="." method="post">
+            {% csrf_token %}
             <div class="row">
                 <div class="col">
                     <p>Количество строк на странице</p>
@@ -46,6 +47,7 @@
                         <label class="form-check-label" for="all">Все результаты</label>
                     </div>
                 </div>
+                <button class="btn btn-primary">Check me!</button>
             </div>
         </form>
         <br>
@@ -98,10 +100,14 @@
                         </tbody>
                     </table>
                 </div>
-                {% if values.has_other_pages %}
-                    {% load bootstrap_pagination %}
-                    {% bootstrap_paginate values range=25 show_prev_next="false" show_first_last="true" %}
-                {% endif %}
+                <div class="row">
+                    <div class="col">
+                        {% if values.has_other_pages %}
+                            {% load bootstrap_pagination %}
+                            {% bootstrap_paginate values range=17 show_prev_next="false" show_first_last="true" %}
+                        {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>

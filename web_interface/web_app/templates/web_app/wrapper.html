@@ -11,10 +11,12 @@
     {% bootstrap_jquery %}
     {% bootstrap_javascript %}
 </head>
-<nav class="navbar navbar-dark bg-dark">
-    <span class="navbar-text">
-        <h3>Hello World!</h3>
-    </span>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    {% load static %}
+    <img src="{% static '/web_app/img/logo.png' %} " width="50" height="50" class="d-inline-block align-top" alt="">
+<!--    <span class="navbar-text">-->
+<!--        <h3>Hello World!</h3>-->
+<!--    </span>-->
 </nav>
 <body>
     {% block content %}
