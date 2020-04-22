@@ -47,8 +47,9 @@
                         <label class="form-check-label" for="all">Все результаты</label>
                     </div>
                 </div>
-                <button class="btn btn-primary">Check me!</button>
             </div>
+            <br>
+            <button class="btn btn-primary">Render</button>
         </form>
         <br>
         <div class="row">
@@ -102,10 +103,29 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        {% if values.has_other_pages %}
-                            {% load bootstrap_pagination %}
-                            {% bootstrap_paginate values range=17 show_prev_next="false" show_first_last="true" %}
-                        {% endif %}
+
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                {% if values.has_previous %}
+                                    <li class="page-item"><a class="page-link" href="{% url 'pagination' %}{{ values.previous_page_number }}">Previous</a></li>
+                                {% endif %}
+                                {% for _ in values.num_pages_tuple %}
+                                    {% if forloop.counter != values.number %}
+                                        <li class="page-item"><a class="page-link" href="{% url 'pagination' %}{{forloop.counter}}">{{ forloop.counter }}</a></li>
+                                    {% else %}
+                                        <li class="page-item active"><span class="page-link">{{ forloop.counter }}</span></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if values.has_next %}
+                                    <li class="page-item"><a class="page-link" href="{% url 'pagination' %}{{ values.next_page_number }}">Next</a></li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+
+<!--                        {% if values.has_other_pages %}-->
+<!--                            {% load bootstrap_pagination %}-->
+<!--                            {% bootstrap_paginate values range=17 show_prev_next="false" show_first_last="true" %}-->
+<!--                        {% endif %}-->
                     </div>
                 </div>
             </div>
