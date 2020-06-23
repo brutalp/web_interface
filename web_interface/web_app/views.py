@@ -1,80 +1,28 @@
-from django.views import generic
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import *
 from django.views.generic import View
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse
+from .models import *
+import json
 
 
-class PagView(View):
-
+class IndexView(View):
     def get(self, request, page_id=1):
-        valueList = Measurement.objects.all().order_by('id')
-        page = request.GET.get('page', 1)
-        paginator = Paginator(valueList, 50)
-        try:
-            values = paginator.page(page_id)
-            values.num_pages_tuple = tuple(range(paginator.num_pages))
-        except:
-            return redirect(reverse('pagination'))
-        return render(request, 'web_app/web.html', {'values': values})
 
-
-# def PagView(request):
-#     valueList = Measurement.objects.all().order_by('id')
-#     if request.method == 'POST':
-#         pass
-#         print('POST')
-#         html = '<html><body>'
-#         x = []
-#         for key, value in request.POST.items():
-#             html += f'{key}: {value}<br>'
-#             x = x.append(value)
-#         html += '</html></body>'
-#         print(x)
-#         return HttpResponse(html)
-#     else:
-#         print('GET')
-#         page = request.GET.get('page', 1)
-#         # value_on_page = request.POST.get(value)
-#         # paginator = Paginator(valueList, 50)
-#         # paginator = Paginator(valueList, value)
-#         # paginator = Paginator(valueList, 50)
-#
-#         paginator = Paginator(valueList, 50)
-#         try:
-#             values = paginator.page(page)
-#             values.num_pages_tuple = tuple(range(paginator.num_pages))
-#         except:
-#             return redirect(reverse('pagination'))
-#         # return render(request, 'wine_app/shop.html', {'wines': wines})
-#
-#         # try:
-#         #     values = paginator.page(page)
-#         # except PageNotAnInteger:
-#         #     values = paginator.page(1)
-#         # except EmptyPage:
-#         #     values = paginator.page(paginator.num_pages)
-#         return render(request, 'web_app/web.html', {'values': values})
-
-
-def PagViewTest(request):
-    valueList = Measurement.objects.all().order_by('id')
-    page = request.GET.get('page', 1)
-    paginator = Paginator(valueList, 50)
-    try:
-        values = paginator.page(page)
-    except PageNotAnInteger:
-        values = paginator.page(1)
-    except EmptyPage:
-        values = paginator.page(paginator.num_pages)
-    return render(request, 'web_app/webtest.html', {'values': values})
-
-
-# def web_app(request):
-#     return render(request, 'web_app/web.html')
-#
-#
-# class ObjectView(generic.ListView):
-#     model = Object
+        if not request.is_ajax():
+            value_list = Measurmement.objects.all().order_by('id')
+            page = request.GET.get('page', 1)
+            paginator = Paginator(value_list, 50)
+            try:
+                values = paginator.page(page_id)
+                values.num_pages_tuple = tuple(range(paginator.num_pages))
+            except:
+                return redirect(reverse('pagination'))
+            return render(request, 'web_app/index.html', {'values': values})
+        else:
+            values_list = [value for value in Measurmement.objects.values()]
+            values_list = json.dumps({'values': values_list}, indent=4, sort_keys=True, default=str)
+            print('#################AJAX###############')
+            # print(values_list)
+            return HttpResponse(values_list, content_type='application/json')
