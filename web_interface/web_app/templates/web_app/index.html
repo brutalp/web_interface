@@ -1,0 +1,20 @@
+{% extends 'web_app/wrapper.html' %}
+{% load static %}
+
+{% block content %}
+{% csrf_token %}
+    <a id="web-ref" hidden="true" href="{% url 'index' %}"></a>
+    <script defer src="{% static 'web_app/js/bundle.js' %}"></script>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary">Печать</button>
+                <button type="button" class="btn btn-secondary">Экспорт в CSV файл</button>
+            </div>
+        </div>
+        <br>
+        <div id="svelte"></div>
+    </div>
+
+{% endblock %}
