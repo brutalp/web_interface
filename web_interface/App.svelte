@@ -9,7 +9,7 @@
 	<form action="." method="post">
         <div class="row">
             <div class="col">
-                <p>Количество строк на странице</p>
+                <p>Количество строк на странице:</p>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="value" id="id50" bind:group={measurementsPerPage} value={50} on:click={sliceForPagination(page, measurements, 50)}>
                     <label class="form-check-label" for="id50">50</label>
@@ -28,19 +28,35 @@
                 </div>
             </div>
             <div class="col">
-                <p>Фильтр</p>
+                <p>Фильтр:</p>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="day" value="day">
+                    <input class="form-check-input" type="radio" name="period" id="day" bind:group={checked.day} value={true} on:click={() => showRadio('day')}>
                     <label class="form-check-label" for="day">Показать за день</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="period" value="period">
-                    <label class="form-check-label" for="period">Показать за период</label>
+                    <input class="form-check-input" type="radio" name="period" id="range" bind:group={checked.range} value={true} on:click={() => showRadio('range')}>
+                    <label class="form-check-label" for="range">Показать за период</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="filter" id="all" value="all">
+                    <input class="form-check-input" type="radio" name="period" id="all" bind:group={checked.all} value={true} on:click={() => showRadio(undefined)}>
                     <label class="form-check-label" for="all">Все результаты</label>
                 </div>
+            </div>
+            <div class="col">
+                {#if checked.day}
+                    <p>Выберите дату:</p>
+                    <div class="input-group date">
+                        <input type="date" class="form-control" value="2012-02-12">
+                    </div>
+                {:else if checked.range}
+                    <p>Выберите диапазон:</p>
+                    <div class="input-group date">
+                        <p>С</p>
+                        <input type="date" class="form-control" value="2012-02-12">
+                        <p>По</p>
+                        <input type="date" class="form-control" value="2014-02-12">
+                    </div>
+                {/if}
             </div>
         </div>
     </form>
@@ -105,19 +121,34 @@
 	const CSRF_TOKEN = Cookies.get('csrftoken');
 	const WEB_URL = getRef('web-ref');
 
-    let measurements = []
+    let measurements = [];
     let totalPages = null;
     let page = null;
     let currentPage = 1;
     let measurementsPages = [];
     let measurementsCut = [];
     let measurementsPerPage = 50;
+    let checked = {day: false, range: false, all: true};
 
-    // console.log(measurementsPerPage);
-    function makeAlert() {
-        console.log(measurementsPerPage)
+    function showRadio(din){
+        console.log(din)
+        if (din === 'day'){
+            console.log('din === day')
+            checked.day = true;
+            checked.range = false;
+            checked.all = false;
+        } else if(din === 'range'){
+            console.log('din === range')
+            checked.day = false;
+            checked.range = true;
+            checked.all = false;
+        } else {
+            checked.day = false;
+            checked.range = false;
+            checked.all = true;
+        }
     }
-    // $: console.log(`Значение равно ${measurementsPerPage}`);
+
     function createPagesArray(total){
         let arr = []
         for(let i = 1; i <= total; i++){
@@ -135,10 +166,10 @@
     }
 
     function sliceForPagination(page, measurements, measurementsPerPage, totalPages){
-        console.log('page', page)
-        console.log('length', measurements.length)
-        console.log('totalPages', totalPages | 0)
-        console.log('measurementsPerPage', measurementsPerPage)
+        // console.log('page', page)
+        // console.log('length', measurements.length)
+        // console.log('totalPages', totalPages | 0)
+        // console.log('measurementsPerPage', measurementsPerPage)
 
         // for (let i = 0; i <= totalPages; i++ ) {
             if (page === null) {
