@@ -46,19 +46,20 @@
                 {#if checked.day}
                     <p>Выберите дату:</p>
                     <div class="input-group date">
-                        <input type="date" class="form-control" bind:value={day}>
+                        <input type="date" class="form-control" bind:value={day_1}>
                     </div>
-                    <button type="button" class="btn btn-primary" on:click={() => sortByDay(day, measurements)}>Render day</button>
+                    <br>
+                    <button type="button" class="btn btn-primary" on:click={() => sortByDay(day_1, measurements)}>Render day</button>
                 {:else if checked.range}
                     <p>Выберите диапазон:</p>
                     <div class="input-group date">
                         <p>С</p>
-                        <input type="date" class="form-control" value="2012-02-12">
+                        <input type="date" class="form-control" bind:value={day_1}>
                         <p>По</p>
-                        <input type="date" class="form-control" value="2014-02-12">
+                        <input type="date" class="form-control" bind:value={day_2}>
                     </div>
                     <br>
-                    <button type="button" class="btn btn-primary">Render range</button>
+                    <button type="button" class="btn btn-primary" on:click={() => sortByPeriod(day_1, day_2, measurements)}>Render range</button>
                 {/if}
             </div>
         </div>
@@ -132,31 +133,38 @@
     let measurementsCut = [];
     let measurementsPerPage = 50;
     let checked = {day: false, range: false, all: true};
-    let day = '2012-02-12';
+    let day_1 = '2017-05-15';
+    let day_2 = '2017-06-30';
 
     function sortByDay(day, measurements) {
         let newMeasurements = [];
         measurements.forEach(function (measurement) {
-            let x = new Date(measurement['datatime_d']).setHours(0,0,0,0);
-            let y = new Date(day).setHours(0,0,0,0);
-            // console.log(x);
-            // console.log(new Date(x));
-            // console.log(y);
-            // console.log(new Date(y));
-            // if (new Date(x) === new Date(y)){
-            if (x === y){
-                console.log('################');
+            let day_from_measurement = new Date(measurement['datatime_d']).setHours(0,0,0,0);
+            let day_from_edit = new Date(day).setHours(0,0,0,0);
+            if (day_from_measurement === day_from_edit){
                 newMeasurements.push(measurement);
             }
-            // } else {
-            //     console.log('false')
-            //     console.log(new Date(measurement['datatime_d']));
-            //     console.log(new Date(day));
-            //     console.log('################');
-            // }
         })
-        // console.log(new Date(day))
-        console.log(newMeasurements);
+        sliceForPagination(page, newMeasurements, measurementsPerPage)
+    }
+
+    function sortByPeriod(day_1, day_2, measurements) {
+        let newMeasurements = [];
+        measurements.forEach(function (measurement) {
+            console.log('inside')
+            let day_from_measurement = new Date(measurement['datatime_d']).setHours(0,0,0,0);
+            let day_from_edit_1 = new Date(day_1).setHours(0,0,0,0);
+            let day_from_edit_2 = new Date(day_2).setHours(0,0,0,0);
+            // console.log('day_from_edit_1', day_from_edit_1)
+            // console.log('day_from_edit_2', day_from_edit_2)
+            // console.log('day_from_measurement', day_from_measurement)
+            // if (day_from_edit_1 <= day_from_measurement <= day_from_edit_2){
+            if (day_from_edit_1 <= day_from_measurement && day_from_measurement <= day_from_edit_2){
+                newMeasurements.push(measurement);
+                console.log('true')
+            }
+        })
+        // console.log(newMeasurements)
         sliceForPagination(page, newMeasurements, measurementsPerPage)
     }
 
@@ -176,6 +184,7 @@
             checked.day = false;
             checked.range = false;
             checked.all = true;
+            sliceForPagination(page, measurements, measurementsPerPage)
         }
     }
 
