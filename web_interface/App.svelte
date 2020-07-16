@@ -46,8 +46,9 @@
                 {#if checked.day}
                     <p>Выберите дату:</p>
                     <div class="input-group date">
-                        <input type="date" class="form-control" value="2012-02-12">
+                        <input type="date" class="form-control" bind:value={day}>
                     </div>
+                    <button type="button" class="btn btn-primary" on:click={() => sortByDay(day, measurements)}>Render day</button>
                 {:else if checked.range}
                     <p>Выберите диапазон:</p>
                     <div class="input-group date">
@@ -56,6 +57,8 @@
                         <p>По</p>
                         <input type="date" class="form-control" value="2014-02-12">
                     </div>
+                    <br>
+                    <button type="button" class="btn btn-primary">Render range</button>
                 {/if}
             </div>
         </div>
@@ -129,6 +132,33 @@
     let measurementsCut = [];
     let measurementsPerPage = 50;
     let checked = {day: false, range: false, all: true};
+    let day = '2012-02-12';
+
+    function sortByDay(day, measurements) {
+        let newMeasurements = [];
+        measurements.forEach(function (measurement) {
+            let x = new Date(measurement['datatime_d']).setHours(0,0,0,0);
+            let y = new Date(day).setHours(0,0,0,0);
+            // console.log(x);
+            // console.log(new Date(x));
+            // console.log(y);
+            // console.log(new Date(y));
+            // if (new Date(x) === new Date(y)){
+            if (x === y){
+                console.log('################');
+                newMeasurements.push(measurement);
+            }
+            // } else {
+            //     console.log('false')
+            //     console.log(new Date(measurement['datatime_d']));
+            //     console.log(new Date(day));
+            //     console.log('################');
+            // }
+        })
+        // console.log(new Date(day))
+        console.log(newMeasurements);
+        sliceForPagination(page, newMeasurements, measurementsPerPage)
+    }
 
     function showRadio(din){
         console.log(din)
@@ -166,30 +196,13 @@
     }
 
     function sliceForPagination(page, measurements, measurementsPerPage, totalPages){
-        // console.log('page', page)
-        // console.log('length', measurements.length)
-        // console.log('totalPages', totalPages | 0)
-        // console.log('measurementsPerPage', measurementsPerPage)
-
-        // for (let i = 0; i <= totalPages; i++ ) {
-            if (page === null) {
-                measurementsCut = measurements.slice(0, measurementsPerPage)
-                console.log('null', measurementsCut)
-            } else {
-                measurementsCut = measurements.slice(page * measurementsPerPage - measurementsPerPage, measurementsPerPage * page)
-                console.log('else', measurementsCut)
-            }
-        // }
-
-        // if (page == 1){
-        //    measurementsCut = measurements.slice(0, measurementsPerPage)
-        // } else if (page == 2){
-        //     measurementsCut = measurements.slice(3, 6)
-        // } else if (page == 3){
-        //     measurementsCut = measurements.slice(7, 10)
-        // } else {
-        //     measurementsCut = measurements.slice(0, measurementsPerPage)
-        // }
+        if (page === null) {
+            measurementsCut = measurements.slice(0, measurementsPerPage)
+            console.log('null', measurementsCut)
+        } else {
+            measurementsCut = measurements.slice(page * measurementsPerPage - measurementsPerPage, measurementsPerPage * page)
+            console.log('else', measurementsCut)
+        }
     }
 
     function exportToCSV(measurements){
